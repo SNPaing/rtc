@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Facetime</title>
+<link rel = "stylesheet" href = "node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+<link rel = "stylesheet" href = "style.css" />
+<style>
+
+body {
+margin: 0px;
+padding-right: 0px;
+padding-left: 0px;
+padding-top: 0px;
+border: 0px;
+background-image: url("images/back.jpg");
+background-size: auto;
+/**background-color: #FFC0CB;**/
+font-family: sans-serif;
+}
+
+video {
+background: black;
+border: 1px solid gray;
+}
+
+button{
+	background-color: #9ACD32;
+	color:#FFFFFF;
+}
+.page {
+position: absolute;
+/**display: block;**/
+margin: 0 auto;
+width: 100%;
+height: 1000px;
+}
+
+#call-page{
+  width: 100%;
+}
+
+#left{
+  position: relative;
+  float: left;
+  top: 20px;
+  left: 20px;
+  width: 500px;
+}
+#right{
+  
+  position: relative;
+  float: left;
+  top: 20px;
+  left: 150px;
+}
+
+#incoming{
+  position: inherit;
+  float: bottom;
+  float: left;
+  top: 380px;
+  left: 650px;
+
+}
+#yours {
+width: 150px;
+height: 150px;
+position: absolute;
+top: 15px;
+right: 15px;
+}
+#theirs {
+width: 500px;
+height: 500px;
+}
+#received {
+background-color: #AED581;
+display: block;
+width: 480px;
+height: 200px;
+padding: 10px;
+margin-top: 10px;
+color: black;
+overflow: scroll;
+}
+
+#messageInput{
+  background-color: #AED581;
+  width: 425px;
+  height: 40px;
+  margin-top: 10px;
+  padding: 10px;
+  color: black;
+  left: 20x;
+}
+
+#photo {
+  border: 1px solid black;
+  box-shadow: 2px 2px 3px black;
+  width:320px;
+  height:240px;
+}
+
+#canvas {
+  display:none;
+}
+
+.output {
+  width: 340px;
+  display:inline-block;
+}
+
+#takePicture {
+  display:block;
+  position:relative;
+  margin-left:auto;
+  margin-right:auto;
+  bottom:32px;
+  background-color: rgba(0, 150, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  font-family: "Lucida Grande", "Arial", sans-serif;
+  color: rgba(255, 255, 255, 1.0);
+}
+
+#logged{
+  background-color: #C5E1A5;
+  width: 100%;
+  font-size: 20px ;
+}
+
+</style>
+</head>
+<body>
+<!--<div id="login-page" class="page">
+	<h2>Login As</h2>
+	<input type="text" id="username" />
+	<button id="login">Login</button>
+</div>-->
+<div id = "login-page" class = "container text-center page"> 
+  <img id="people" src="images/people.jpg"/>
+	<center>
+      <div class = "row"> 
+         
+			   <center>
+            <header class="header">
+               <div class="header__logo" >
+                  <center><img class="header__logo_img" src="images/Logo.png"/></center>
+               </div>
+            </header>
+        </center>
+               
+              <!-- <h2 class="header__title">FaceTime</h2>      -->
+        <div class = "col-md-4 col-md-offset-4">                         
+            
+
+            <h3 class="join__title">
+               <p>Please enter your username.</p>
+            </h3>
+            <div class="join__body">
+               <div class="join__row">
+                  <input type="text" class="join__input" id="username" name="username" placeholder="Username" autofocus required title="Field should contain alphanumeric characters only in a range 3 to 20. The first character must be a letter." pattern="^[a-zA-Z][\w]{2,19}$">
+               </div>
+
+
+               <div class="join__row">
+                  <button type="submit" style="background-color: #9ACD32" id="login"  class="join__btn" onclick="myFunction()">LogIn
+                  </button>
+               </div>
+          </div>
+       </div> 
+    </div> 
+  </center>
+</div>
+<div id="call-page" class="page">
+  <p id = "logged"></p>
+
+  <script>
+    function myFunction(){
+      var1 = "Logged in as: "
+      var2 = document.getElementById("username").value;
+      var3 = var1.concat(var2);
+      document.getElementById('logged').innerHTML = var3;
+    }
+  </script>
+
+  <div id="left">
+  	<video id="yours" autoplay></video>
+  	<video id="theirs" autoplay></video>
+  	<center>
+        <input type="text" id="theirusername" />
+      	<button id="call">Call</button>
+      	<button id="hang-up">Hang Up</button>
+        <button id="takePhoto">Take Photo</button>
+        
+          <br><br><br><h2>Connected Users</h2><br>
+          <div id="userlistbox" class="list-type1">
+              
+          </div>
+        
+    </center>
+  </div>
+
+  <div id="right">
+  	<div class="row">
+	    <h2 class="inline" style="color: #7D3C98; font-family: French Script MT;
+      font-weight: bolder; font-size: 350%" id="Chatting">Keep Chatting</h2>
+	    <img class="inline" id="livechat" src="images/chatting.png" alt="livechat"/>
+	   </div>
+    
+      <div id="received"></div>
+      <textarea id="messageInput" cols="70" rows="1" placeholder="Type a message here!"></textarea>
+      <!--<input type="text" id="messageInput"></input>-->
+      <button id="sendButton">Send</button>
+    
+  </div>
+
+  <div id="incoming">
+    <h2 style="color: #7D3C98; font-family: French script MT; font-weight: bolder; font-size: 350%">Incoming Photo</font></h2>
+    <canvas id="canvas"></canvas>
+    <div class="output">
+        <img id="photo" alt="The screen capture will appear in this box.">
+    </div>
+</div>
+
+
+<script src="client.js"></script>
+<script src="adapter.js"></script>
+
+
+</body>
+</html>
